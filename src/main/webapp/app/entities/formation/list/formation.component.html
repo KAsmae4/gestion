@@ -1,0 +1,135 @@
+<div class="card jh-card">
+  <h2 id="page-heading" data-cy="FormationHeading">
+    <span appTranslate="intershipManagementApp.formation.home.title">Formations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="intershipManagementApp.formation.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-formation"
+        [routerLink]="['/gestion/formation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="intershipManagementApp.formation.home.createLabel"> Create a new Formation </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="formations?.length === 0">
+    <span appTranslate="intershipManagementApp.formation.home.notFound">No Formations found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="formations && formations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nom">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.formation.nom">Nom de la formation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nomEtablissement">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.formation.nomEtablissement">Nom de l'établissement</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telephone">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.formation.telephone">Telephone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="ville">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.formation.ville">Ville</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="typeFormation.id">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.formation.typeFormation">Type Formation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let formation of formations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/gestion/formation', formation.id, 'view']">{{ formation.id }}</a>
+          </td>
+          <td>{{ formation.nom }}</td>
+          <td>{{ formation.nomEtablissement }}</td>
+          <td>{{ formation.telephone }}</td>
+          <td>{{ formation.ville }}</td>
+          <td>
+            <div *ngIf="formation.typeFormation">
+              <a [routerLink]="['/gestion/type-formation', formation.typeFormation.id, 'view']">{{ formation.typeFormation.nom }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/formation', formation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/formation', formation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(formation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="formations && formations.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

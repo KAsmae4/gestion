@@ -1,0 +1,157 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="card jh-card mb-3">
+    <h2
+      id="app-etudiant-heading"
+      data-cy="EtudiantCreateUpdateHeading"
+      appTranslate="intershipManagementApp.etudiant.home.createOrEditLabel"
+    >
+      Create or edit a Etudiant
+    </h2>
+
+    <app-alert-error></app-alert-error>
+
+    <div class="p-5">
+      <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+        <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.cin" for="field_cin">CIN</label>
+        <input type="text" class="form-control" name="cin" id="field_cin" data-cy="cin" formControlName="cin" />
+        <div *ngIf="editForm.get('cin')!.invalid && (editForm.get('cin')!.dirty || editForm.get('cin')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('cin')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.civilite" for="field_civilite">Civilité</label>
+        <select class="form-control" name="civilite" formControlName="civilite" id="field_civilite" data-cy="civilite">
+          <option [ngValue]="null">{{ 'intershipManagementApp.Civilite.null' | translate }}</option>
+          <option *ngFor="let civilite of civiliteValues" [value]="civilite">
+            {{ 'intershipManagementApp.Civilite.' + civilite | translate }}
+          </option>
+        </select>
+
+        <div *ngIf="editForm.get('civilite')!.invalid && (editForm.get('civilite')!.dirty || editForm.get('civilite')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('civilite')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.nom" for="field_nom">Nom</label>
+        <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.prenom" for="field_prenom">Prenom</label>
+        <input type="text" class="form-control" name="prenom" id="field_prenom" data-cy="prenom" formControlName="prenom" />
+        <div *ngIf="editForm.get('prenom')!.invalid && (editForm.get('prenom')!.dirty || editForm.get('prenom')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('prenom')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.telephone" for="field_telephone">Telephone</label>
+        <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+        <div *ngIf="editForm.get('telephone')!.invalid && (editForm.get('telephone')!.dirty || editForm.get('telephone')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('telephone')?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.email" for="field_email">Email</label>
+        <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.dateNaissance" for="field_dateNaissance"
+          >Date Naissance</label
+        >
+        <div class="input-group p-0">
+          <input
+            id="field_dateNaissance"
+            data-cy="dateNaissance"
+            type="text"
+            class="form-control"
+            name="dateNaissance"
+            ngbDatepicker
+            #dateNaissanceDp="ngbDatepicker"
+            formControlName="dateNaissance"
+          />
+          <button type="button" class="btn btn-secondary" (click)="dateNaissanceDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+        <div
+          *ngIf="editForm.get('dateNaissance')!.invalid && (editForm.get('dateNaissance')!.dirty || editForm.get('dateNaissance')!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('dateNaissance')?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.adresse" for="field_adresse">Adresse</label>
+        <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+        <div *ngIf="editForm.get('adresse')!.invalid && (editForm.get('adresse')!.dirty || editForm.get('adresse')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('adresse')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.etudiant.ville" for="field_ville">Ville</label>
+        <input type="text" class="form-control" name="ville" id="field_ville" data-cy="ville" formControlName="ville" />
+        <div *ngIf="editForm.get('ville')!.invalid && (editForm.get('ville')!.dirty || editForm.get('ville')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('ville')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancel</span>
+    </button>
+
+    <button
+      type="submit"
+      id="save-entity"
+      data-cy="entityCreateSaveButton"
+      [disabled]="editForm.invalid || isSaving"
+      class="btn btn-primary"
+    >
+      <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Save</span>
+    </button>
+  </div>
+</form>

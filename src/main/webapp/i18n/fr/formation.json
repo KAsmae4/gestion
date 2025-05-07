@@ -1,0 +1,30 @@
+{
+  "intershipManagementApp": {
+    "formation": {
+      "home": {
+        "title": "Formations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau formation",
+        "createOrEditLabel": "Créer ou éditer un formation",
+        "notFound": "Aucun formation trouvée"
+      },
+      "created": "Un nouveau Formation a été créé avec l'identifiant {{ param }}",
+      "updated": "La formation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "La formation avec l'identifiant {{ param }} a été supprimée",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer la formation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Formation"
+      },
+      "id": "ID",
+      "nom": "Nom de la formation",
+      "nomEtablissement": "Nom de l'établissement",
+      "telephone": "Téléphone",
+      "adresse": "Adresse",
+      "ville": "Ville",
+      "demande": "Demande",
+      "typeFormation": "Type de formation"
+    }
+  }
+}

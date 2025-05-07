@@ -1,0 +1,152 @@
+<div class="card jh-card">
+  <h2 id="page-heading" data-cy="EtudiantHeading">
+    <span appTranslate="intershipManagementApp.etudiant.home.title">Etudiants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="intershipManagementApp.etudiant.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-etudiant"
+        [routerLink]="['/gestion/etudiant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="intershipManagementApp.etudiant.home.createLabel"> Create a new Etudiant </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="etudiants?.length === 0">
+    <span appTranslate="intershipManagementApp.etudiant.home.notFound">No Etudiants found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="etudiants && etudiants.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cin">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.cin">CIN</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="civilite">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.civilite">Civilité</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nom">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.nom">Nom</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="prenom">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.prenom">Prenom</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telephone">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.telephone">Telephone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="email">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dateNaissance">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.dateNaissance">Date Naissance</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="ville">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.etudiant.ville">Ville</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let etudiant of etudiants; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/gestion/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
+          </td>
+          <td>{{ etudiant.cin }}</td>
+          <td appTranslate="intershipManagementApp.Civilite.{{ etudiant.civilite }}">{{ etudiant.civilite }}</td>
+          <td>{{ etudiant.nom }}</td>
+          <td>{{ etudiant.prenom }}</td>
+          <td>{{ etudiant.telephone }}</td>
+          <td>{{ etudiant.email }}</td>
+          <td>{{ etudiant.dateNaissance | formatMediumDate }}</td>
+          <td>{{ etudiant.ville }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/etudiant', etudiant.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/etudiant', etudiant.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(etudiant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="etudiants && etudiants.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

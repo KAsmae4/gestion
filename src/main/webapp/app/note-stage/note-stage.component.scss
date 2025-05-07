@@ -1,0 +1,44 @@
+html,
+body {
+  background: #fff !important;
+}
+
+.report-print {
+  background: #fff !important;
+  height: 100vh !important;
+
+  min-width: 768px !important;
+  font-size: 15px !important;
+}
+
+.report-print * {
+  border-color: #aaa !important;
+  color: #000 !important;
+}
+
+.logo-img {
+  height: 140px;
+  width: 180px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../content/images/note-stage/logo.jpg') no-repeat center center;
+  background-size: contain;
+}
+
+.logo-ar-img {
+  height: 140px;
+  width: 180px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../content/images/note-stage/logo-ar.jpg') no-repeat center center;
+  background-size: contain;
+}
+
+.logo-fr-img {
+  height: 140px;
+  width: 180px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../content/images/note-stage/logo-fr.jpg') no-repeat center center;
+  background-size: contain;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ServiceHospitalier.
+    -->
+    <changeSet id="20230418223133-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="type_service_id"
+                                 baseTableName="service_hospitalier"
+                                 constraintName="fk_service_hospitalier__type_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_service"/>
+
+        <addForeignKeyConstraint baseColumnNames="chef_service_id"
+                                 baseTableName="service_hospitalier"
+                                 constraintName="fk_service_hospitalier__chef_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="chef_service"/>
+
+        <addForeignKeyConstraint baseColumnNames="hopital_id"
+                                 baseTableName="service_hospitalier"
+                                 constraintName="fk_service_hospitalier__hopital_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hopital"/>
+    </changeSet>
+</databaseChangeLog>

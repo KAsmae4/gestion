@@ -1,0 +1,10 @@
+{
+  "intershipManagementApp": {
+    "StatutDemande": {
+      "null": "",
+      "DEMANDEE": "Demandée",
+      "ACCEPTEE": "Acceptée",
+      "REFUSEE": "Refusée"
+    }
+  }
+}

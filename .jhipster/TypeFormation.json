@@ -1,0 +1,26 @@
+{
+  "applications": ["intershipManagement"],
+  "changelogDate": "20230418101915",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "type_formation",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "TypeFormation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

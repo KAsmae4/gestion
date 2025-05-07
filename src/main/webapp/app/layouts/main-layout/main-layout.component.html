@@ -1,0 +1,125 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid" style="min-height: calc(100vh - 200px)">
+  <section class="section-content py-3">
+    <div class="row">
+      <aside class="col-lg-2 mb-3">
+        <nav class="sidebar sticky-top card py-2">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span>Dashboard</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/demande" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.demande">Demandes</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/etudiant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.etudiant">Etudiants</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/documents" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.documents">Documents</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/chef-service" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.chefService">Chef de Service</span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" routerLink="/gestion/encadrant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.encadrant">Encadrant</span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" routerLink="/gestion/formation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.formation">Formation</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/gestion/type-formation"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <span appTranslate="global.menu.entities.typeFormation">Types de Formation</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/hopital" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.hopital">Hopitaux</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/gestion/service-hospitalier"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <span appTranslate="global.menu.entities.serviceHospitalier">Services Hospitalier</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/gestion/type-service" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span appTranslate="global.menu.entities.typeService">Types de Service</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="col-lg-10">
+        <label class="mb-3 w-100">
+          <ng-select
+            [items]="(etudiants$ | async) || []"
+            [trackByFn]="trackEtudiantsById"
+            [(ngModel)]="etudiant"
+            (ngModelChange)="handleEtudiantSelect($event)"
+            [loading]="etudiantsLoading"
+            [typeahead]="etudiantInput$"
+            [minTermLength]="2"
+            [editableSearchTerm]="true"
+            [hideSelected]="false"
+            (clear)="clear()"
+            typeToSearchText="Veuillez saisir au moins 2 caractères"
+            placeholder="Recherchez des étudiants par nom, CIN..."
+          >
+            <ng-template ng-notfound-tmp>
+              <span>Aucun étudiant trouvé</span>
+            </ng-template>
+            <ng-template ng-option-tmp let-etudiant="item">
+              <div>
+                <span class="fw-bold text-info">{{ etudiant?.cin }}</span> -
+                <span class="fw-bolder text-capitalize">{{ etudiant?.nom }} {{ etudiant?.prenom }}</span>
+              </div>
+              <div class="text-info fw-bolder">Date de naissance : {{ etudiant.dateNaissance | formatMediumDate }}</div>
+            </ng-template>
+
+            <ng-template ng-label-tmp let-etudiant="item">
+              <span class="fw-bold text-info">{{ etudiant?.cin }}</span>
+              <span class="fw-bolder text-capitalize">{{ etudiant?.nom }} {{ etudiant?.prenom }}</span>
+            </ng-template>
+          </ng-select>
+        </label>
+
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,871 @@
+<div class="justify-content-center d-flex">
+  <div class="jh-card mb-3 col-md-8">
+    <div class="logo-img mb-2"></div>
+    <h1 class="mb-5">Demande de Stage pour les Stagiaires</h1>
+
+    <div class="card p-5 mb-5 overflow-auto">
+      <ul class="progress-indicator">
+        <li *ngFor="let item of steps" [ngClass]="{ completed: item.completed, active: item.id === active }">
+          <span class="bubble"></span>
+          <span style="white-space: pre-line">
+            {{ item.title }}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="alert alert-success" *ngIf="success">
+      <strong>Demande enregistrée!</strong>
+    </div>
+
+    <app-alert-error></app-alert-error>
+
+    <div class="card mb-3" *ngIf="active === 0">
+      <div class="card-body">
+        <form name="etudiantForm" role="form" novalidate [formGroup]="etudiantForm">
+          <h5 class="card-title">Identité de l'interessé</h5>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.cin" for="field_cin">CIN</label>
+              <input type="text" class="form-control" name="cin" id="field_cin" data-cy="cin" formControlName="cin" />
+              <div *ngIf="etudiantForm.get('cin')!.invalid && (etudiantForm.get('cin')!.dirty || etudiantForm.get('cin')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('cin')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.civilite" for="field_civilite">Civilité</label>
+              <select class="form-control" name="civilite" formControlName="civilite" id="field_civilite" data-cy="civilite">
+                <option [ngValue]="null">{{ 'intershipManagementApp.Civilite.null' | translate }}</option>
+                <option *ngFor="let civilite of civiliteValues" [value]="civilite">
+                  {{ 'intershipManagementApp.Civilite.' + civilite | translate }}
+                </option>
+              </select>
+
+              <div
+                *ngIf="
+                  etudiantForm.get('civilite')!.invalid && (etudiantForm.get('civilite')!.dirty || etudiantForm.get('civilite')!.touched)
+                "
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('civilite')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.dateNaissance" for="field_dateNaissance"
+                >Date Naissance</label
+              >
+              <div class="input-group p-0">
+                <input
+                  id="field_dateNaissance"
+                  data-cy="dateNaissance"
+                  type="text"
+                  class="form-control"
+                  name="dateNaissance"
+                  ngbDatepicker
+                  #dateFinDp="ngbDatepicker"
+                  formControlName="dateNaissance"
+                />
+                <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  etudiantForm.get('dateNaissance')!.invalid &&
+                  (etudiantForm.get('dateNaissance')!.dirty || etudiantForm.get('dateNaissance')!.touched)
+                "
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('dateNaissance')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.nom" for="field_nom">Nom</label>
+              <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+              <div *ngIf="etudiantForm.get('nom')!.invalid && (etudiantForm.get('nom')!.dirty || etudiantForm.get('nom')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('nom')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.prenom" for="field_prenom">Prenom</label>
+              <input type="text" class="form-control" name="prenom" id="field_prenom" data-cy="prenom" formControlName="prenom" />
+              <div
+                *ngIf="etudiantForm.get('prenom')!.invalid && (etudiantForm.get('prenom')!.dirty || etudiantForm.get('prenom')!.touched)"
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('prenom')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.telephone" for="field_telephone">Telephone</label>
+              <input
+                type="text"
+                class="form-control"
+                name="telephone"
+                id="field_telephone"
+                data-cy="telephone"
+                formControlName="telephone"
+              />
+              <div
+                *ngIf="
+                  etudiantForm.get('telephone')!.invalid && (etudiantForm.get('telephone')!.dirty || etudiantForm.get('telephone')!.touched)
+                "
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('telephone')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.etudiant.email" for="field_email">Email</label>
+              <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+              <div *ngIf="etudiantForm.get('email')!.invalid && (etudiantForm.get('email')!.dirty || etudiantForm.get('email')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="etudiantForm.get('email')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.etudiant.adresse" for="field_adresse">Adresse</label>
+            <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+            <div
+              *ngIf="etudiantForm.get('adresse')!.invalid && (etudiantForm.get('adresse')!.dirty || etudiantForm.get('adresse')!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="etudiantForm.get('adresse')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.etudiant.ville" for="field_ville">Ville</label>
+            <input type="text" class="form-control" name="ville" id="field_ville" data-cy="ville" formControlName="ville" />
+            <div *ngIf="etudiantForm.get('ville')!.invalid && (etudiantForm.get('ville')!.dirty || etudiantForm.get('ville')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="etudiantForm.get('ville')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mb-3" *ngIf="active === 1">
+      <div class="card-body">
+        <form name="demandeForm" role="form" novalidate [formGroup]="demandeForm">
+          <h5 class="card-title">Descriptif du stage souhaité au CHU Mohammed VI de Marrakech</h5>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.demande.dateDebut" for="field_dateDebut">Date Debut</label>
+              <div class="input-group p-0">
+                <input
+                  id="field_dateDebut"
+                  data-cy="dateDebut"
+                  type="text"
+                  class="form-control"
+                  name="dateDebut"
+                  ngbDatepicker
+                  #dateDebutDp="ngbDatepicker"
+                  formControlName="dateDebut"
+                />
+                <button type="button" class="btn btn-secondary" (click)="dateDebutDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="
+                  demandeForm.get('dateDebut')!.invalid && (demandeForm.get('dateDebut')!.dirty || demandeForm.get('dateDebut')!.touched)
+                "
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="demandeForm.get('dateDebut')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="intershipManagementApp.demande.dateFin" for="field_dateFin">Date Fin</label>
+              <div class="input-group p-0">
+                <input
+                  id="field_dateFin"
+                  data-cy="dateFin"
+                  type="text"
+                  class="form-control"
+                  name="dateFin"
+                  ngbDatepicker
+                  #dateFinDp="ngbDatepicker"
+                  formControlName="dateFin"
+                />
+                <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div
+                *ngIf="demandeForm.get('dateFin')!.invalid && (demandeForm.get('dateFin')!.dirty || demandeForm.get('dateFin')!.touched)"
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="demandeForm.get('dateFin')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.demande.sujet" for="field_sujet">Sujet</label>
+            <textarea type="text" class="form-control" name="sujet" id="field_sujet" data-cy="sujet" formControlName="sujet"></textarea>
+            <div *ngIf="demandeForm.get('sujet')!.invalid && (demandeForm.get('sujet')!.dirty || demandeForm.get('sujet')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="demandeForm.get('sujet')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mb-3" *ngIf="active === 2">
+      <div class="card-body">
+        <form name="formationForm" role="form" novalidate [formGroup]="formationForm">
+          <h5 class="card-title">Descriptif de la Formation Actuelle</h5>
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.formation.nom" for="field_nom">Nom</label>
+            <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+            <div *ngIf="formationForm.get('nom')!.invalid && (formationForm.get('nom')!.dirty || formationForm.get('nom')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="formationForm.get('nom')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.formation.nomEtablissement" for="field_nomEtablissement"
+              >Nom de l'etablissement</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="nomEtablissement"
+              id="field_nomEtablissement"
+              data-cy="nomEtablissement"
+              formControlName="nomEtablissement"
+            />
+            <div
+              *ngIf="
+                formationForm.get('nomEtablissement')!.invalid &&
+                (formationForm.get('nomEtablissement')!.dirty || formationForm.get('nomEtablissement')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="formationForm.get('nomEtablissement')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.formation.telephone" for="field_telephone">Telephone</label>
+            <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+            <div
+              *ngIf="
+                formationForm.get('telephone')!.invalid &&
+                (formationForm.get('telephone')!.dirty || formationForm.get('telephone')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="formationForm.get('telephone')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.formation.adresse" for="field_adresse">Adresse</label>
+            <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+            <div
+              *ngIf="
+                formationForm.get('adresse')!.invalid && (formationForm.get('adresse')!.dirty || formationForm.get('adresse')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="formationForm.get('adresse')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" appTranslate="intershipManagementApp.formation.ville" for="field_ville">Ville</label>
+            <input type="text" class="form-control" name="ville" id="field_ville" data-cy="ville" formControlName="ville" />
+            <div *ngIf="formationForm.get('ville')!.invalid && (formationForm.get('ville')!.dirty || formationForm.get('ville')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="formationForm.get('ville')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                This field is required.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="typeformation" class="form-label">Type de Formation</label>
+            <select class="form-control" id="typeformation" name="typeformation" data-cy="typeFormation" formControlName="typeFormation">
+              <option *ngIf="!formationForm.get('typeFormation')!.value" [ngValue]="null" selected></option>
+              <optgroup *ngFor="let typeFormation of typesFormation" label="{{ typeFormation.type }}">
+                <option *ngFor="let item of typeFormation.types" [ngValue]="item">{{ item.nom }}</option>
+              </optgroup>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mb-3" *ngIf="active === 3">
+      <div class="card-body">
+        <form name="documentsForm" role="form" novalidate [formGroup]="documentsForm">
+          <h5 class="card-title">Justificatifs (Cv, CIN, attestation d'assurance et lettre de motivation)</h5>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <label class="form-label" appTranslate="intershipManagementApp.documents.cv" for="field_cv">Cv</label>
+                <div>
+                  <div *ngIf="documentsForm.get('cv')!.value" class="form-text text-danger clearfix">
+                    <a
+                      class="pull-start"
+                      (click)="openFile(documentsForm.get('cv')!.value!, documentsForm.get('cvContentType')!.value!)"
+                      appTranslate="entity.action.open"
+                      >Open</a
+                    >
+                    <br />
+                    <span class="pull-start"
+                      >{{ documentsForm.get('cvContentType')!.value }} , {{ byteSize(documentsForm.get('cv')!.value!) }}</span
+                    >
+                    <button
+                      type="button"
+                      (click)="documentsForm.patchValue({ cv: undefined, cvContentType: undefined })"
+                      class="btn btn-secondary btn-xs pull-end"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    id="file_cv"
+                    data-cy="cv"
+                    (change)="setFileData($event, 'cv', false)"
+                    appTranslate="entity.action.addblob"
+                  />
+                </div>
+                <input type="hidden" class="form-control" name="cv" id="field_cv" data-cy="cv" formControlName="cv" />
+                <input type="hidden" class="form-control" name="cvContentType" id="field_cvContentType" formControlName="cvContentType" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <label class="form-label" appTranslate="intershipManagementApp.documents.cin" for="field_filecin">CIN</label>
+                <div>
+                  <div *ngIf="documentsForm.get('cin')!.value" class="form-text text-danger clearfix">
+                    <a
+                      class="pull-start"
+                      (click)="openFile(documentsForm.get('cin')!.value!, documentsForm.get('cinContentType')!.value!)"
+                      appTranslate="entity.action.open"
+                      >Open</a
+                    >
+                    <br />
+                    <span class="pull-start"
+                      >{{ documentsForm.get('cinContentType')!.value }} , {{ byteSize(documentsForm.get('cin')!.value!) }}</span
+                    >
+                    <button
+                      type="button"
+                      (click)="documentsForm.patchValue({ cin: undefined, cinContentType: undefined })"
+                      class="btn btn-secondary btn-xs pull-end"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    id="file_cin"
+                    data-cy="cin"
+                    (change)="setFileData($event, 'cin', false)"
+                    appTranslate="entity.action.addblob"
+                  />
+                </div>
+                <input type="hidden" class="form-control" name="cin" id="field_filecin" data-cy="cin" formControlName="cin" />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="cinContentType"
+                  id="field_cinContentType"
+                  formControlName="cinContentType"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <label class="form-label" appTranslate="intershipManagementApp.documents.lettreMotivation" for="field_lettreMotivation"
+                  >Lettre de motivation</label
+                >
+                <div>
+                  <div *ngIf="documentsForm.get('lettreMotivation')!.value" class="form-text text-danger clearfix">
+                    <a
+                      class="pull-start"
+                      (click)="
+                        openFile(documentsForm.get('lettreMotivation')!.value!, documentsForm.get('lettreMotivationContentType')!.value!)
+                      "
+                      appTranslate="entity.action.open"
+                      >Open</a
+                    >
+                    <br />
+                    <span class="pull-start"
+                      >{{ documentsForm.get('lettreMotivationContentType')!.value }},
+                      {{ byteSize(documentsForm.get('lettreMotivation')!.value!) }}</span
+                    >
+                    <button
+                      type="button"
+                      (click)="documentsForm.patchValue({ lettreMotivation: undefined, lettreMotivationContentType: undefined })"
+                      class="btn btn-secondary btn-xs pull-end"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    id="file_lettreMotivation"
+                    data-cy="lettreMotivation"
+                    (change)="setFileData($event, 'lettreMotivation', false)"
+                    appTranslate="entity.action.addblob"
+                  />
+                </div>
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="lettreMotivation"
+                  id="field_lettreMotivation"
+                  data-cy="lettreMotivation"
+                  formControlName="lettreMotivation"
+                />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="lettreMotivationContentType"
+                  id="field_lettreMotivationContentType"
+                  formControlName="lettreMotivationContentType"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <label
+                  class="form-label"
+                  appTranslate="intershipManagementApp.documents.attestationScolarite"
+                  for="field_attestationScolarite"
+                  >Attestation de scolarité</label
+                >
+                <div>
+                  <div *ngIf="documentsForm.get('attestationScolarite')!.value" class="form-text text-danger clearfix">
+                    <a
+                      class="pull-start"
+                      (click)="
+                        openFile(
+                          documentsForm.get('attestationScolarite')!.value!,
+                          documentsForm.get('attestationScolariteContentType')!.value!
+                        )
+                      "
+                      appTranslate="entity.action.open"
+                      >Open</a
+                    >
+                    <br />
+                    <span class="pull-start"
+                      >{{ documentsForm.get('attestationScolariteContentType')!.value }},
+                      {{ byteSize(documentsForm.get('attestationScolarite')!.value!) }}</span
+                    >
+                    <button
+                      type="button"
+                      (click)="documentsForm.patchValue({ attestationScolarite: undefined, attestationScolariteContentType: undefined })"
+                      class="btn btn-secondary btn-xs pull-end"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    id="file_attestationScolarite"
+                    data-cy="attestationScolarite"
+                    (change)="setFileData($event, 'attestationScolarite', false)"
+                    appTranslate="entity.action.addblob"
+                  />
+                </div>
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="attestationScolarite"
+                  id="field_attestationScolarite"
+                  data-cy="attestationScolarite"
+                  formControlName="attestationScolarite"
+                />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="attestationScolariteContentType"
+                  id="field_attestationScolariteContentType"
+                  formControlName="attestationScolariteContentType"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <label
+                  class="form-label"
+                  appTranslate="intershipManagementApp.documents.attestationAssurance"
+                  for="field_attestationAssurance"
+                  >Attestation Assurance</label
+                >
+                <div>
+                  <div *ngIf="documentsForm.get('attestationAssurance')!.value" class="form-text text-danger clearfix">
+                    <a
+                      class="pull-start"
+                      (click)="
+                        openFile(
+                          documentsForm.get('attestationAssurance')!.value!,
+                          documentsForm.get('attestationAssuranceContentType')!.value!
+                        )
+                      "
+                      appTranslate="entity.action.open"
+                      >Open</a
+                    >
+                    <br />
+                    <span class="pull-start">
+                      {{ documentsForm.get('attestationAssuranceContentType')!.value }},
+                      {{ byteSize(documentsForm.get('attestationAssurance')!.value!) }}
+                    </span>
+                    <button
+                      type="button"
+                      (click)="documentsForm.patchValue({ attestationAssurance: undefined, attestationAssuranceContentType: undefined })"
+                      class="btn btn-secondary btn-xs pull-end"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    id="file_attestationAssurance"
+                    data-cy="attestationAssurance"
+                    (change)="setFileData($event, 'attestationAssurance', false)"
+                    appTranslate="entity.action.addblob"
+                  />
+                </div>
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="attestationAssurance"
+                  id="field_attestationAssurance"
+                  data-cy="attestationAssurance"
+                  formControlName="attestationAssurance"
+                />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="attestationAssuranceContentType"
+                  id="field_attestationAssuranceContentType"
+                  formControlName="attestationAssuranceContentType"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="active === 4">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 mb-3">
+          <div class="card jh-card">
+            <h5 class="card-title">Identité de l'interessé</h5>
+            <dl class="row-md jh-entity-details">
+              <dt><span appTranslate="intershipManagementApp.etudiant.cin">CIN</span></dt>
+              <dd>
+                <span>{{ etudiant?.cin }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.nom">Nom</span></dt>
+              <dd>
+                <span appTranslate="intershipManagementApp.Civilite.{{ etudiant?.civilite }}">{{ etudiant?.civilite }}</span>
+                <span>{{ etudiant?.nom }}</span> <span>{{ etudiant?.prenom }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.telephone">Telephone</span></dt>
+              <dd>
+                <span>{{ etudiant?.telephone }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.email">Email</span></dt>
+              <dd>
+                <span>{{ etudiant?.email }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.dateNaissance">Date Naissance</span></dt>
+              <dd>
+                <span>{{ etudiant?.dateNaissance | formatMediumDate }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.adresse">Adresse</span></dt>
+              <dd>
+                <span>{{ etudiant?.adresse }}</span>
+              </dd>
+              <dt><span appTranslate="intershipManagementApp.etudiant.ville">Ville</span></dt>
+              <dd>
+                <span>{{ etudiant?.ville }}</span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6 mb-3">
+          <div class="card jh-card">
+            <div class="card-body">
+              <h5 class="card-title">Descriptif de la Formation Actuelle</h5>
+              <dl class="row-md jh-entity-details">
+                <dt><span appTranslate="intershipManagementApp.formation.nom">Nom</span></dt>
+                <dd>
+                  <span>{{ formation?.nom }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.formation.nomEtablissement">Nom de l'etablissement</span></dt>
+                <dd>
+                  <span>{{ formation?.nomEtablissement }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.formation.telephone">Telephone</span></dt>
+                <dd>
+                  <span>{{ formation?.telephone }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.formation.adresse">Adresse</span></dt>
+                <dd>
+                  <span>{{ formation?.adresse }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.formation.ville">Ville</span></dt>
+                <dd>
+                  <span>{{ formation?.ville }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.formation.typeFormation">Type Formation</span></dt>
+                <dd>
+                  <span>{{ formation?.typeFormation?.nom }}</span>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <div class="card jh-card">
+            <div class="card-body">
+              <h5 class="card-title">Descriptif du stage souhaité au CHU Mohammed VI de Marrakech</h5>
+              <dl class="row-md jh-entity-details">
+                <dt><span appTranslate="intershipManagementApp.demande.dateDebut">Date Debut</span></dt>
+                <dd>
+                  <span>{{ demande?.dateDebut | formatMediumDate }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.demande.dateFin">Date Fin</span></dt>
+                <dd>
+                  <span>{{ demande?.dateFin | formatMediumDate }}</span>
+                </dd>
+                <dt><span appTranslate="intershipManagementApp.demande.sujet">Sujet</span></dt>
+                <dd>
+                  <span>{{ demande?.sujet }}</span>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <div class="card jh-card">
+            <div class="card-body">
+              <h5 class="card-title">Justificatifs (Cv, CIN, attestation d'assurance et lettre de motivation)</h5>
+              <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div appTranslate="intershipManagementApp.documents.cv">Cv</div>
+                  <div class="d-flex flex-column" *ngIf="documents && documents.cv">
+                    <a (click)="openFile(documents.cv, documents.cvContentType)">Agrandir</a>
+                    <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.cv)" type="application/pdf">
+                      <p>Your browser does not support PDFs.</p>
+                      <a (click)="openFile(documents.cv, documents.cvContentType)">Voir le document</a>
+                    </object>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div appTranslate="intershipManagementApp.documents.cin">CIN</div>
+                  <div class="d-flex flex-column" *ngIf="documents && documents.cin">
+                    <a (click)="openFile(documents.cin, documents.cinContentType)">Agrandir</a>
+                    <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.cin)" type="application/pdf">
+                      <p>Your browser does not support PDFs.</p>
+                      <a (click)="openFile(documents.cin, documents.cinContentType)">Voir le document</a>
+                    </object>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div appTranslate="intershipManagementApp.documents.lettreMotivation">Lettre de motivation</div>
+                  <div class="d-flex flex-column" *ngIf="documents && documents.lettreMotivation">
+                    <a (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)">Agrandir</a>
+                    <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.lettreMotivation)" type="application/pdf">
+                      <p>Your browser does not support PDFs.</p>
+                      <a (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)">Voir le document</a>
+                    </object>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div appTranslate="intershipManagementApp.documents.attestationScolarite">Attestation de scolarité</div>
+                  <div class="d-flex flex-column" *ngIf="documents && documents.attestationScolarite">
+                    <a (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)">Agrandir</a>
+                    <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.attestationScolarite)" type="application/pdf">
+                      <p>Your browser does not support PDFs.</p>
+                      <a (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)">Voir le document</a>
+                    </object>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div appTranslate="intershipManagementApp.documents.attestationAssurance">Attestation d'assurance</div>
+                  <div class="d-flex flex-column" *ngIf="documents && documents.attestationAssurance">
+                    <a (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)">Agrandir</a>
+                    <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.attestationAssurance)" type="application/pdf">
+                      <p>Your browser does not support PDFs.</p>
+                      <a (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)">Voir le document</a>
+                    </object>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="form-check">
+            <label class="form-check-label" for="accepterCondition">
+              <input class="form-check-input" type="checkbox" name="rememberMe" id="accepterCondition" [(ngModel)]="accepterCondition" />
+              <span
+                >En cliquant sur Enregistrer je certifie que les données saisies sont correctes et j'accepte les conditions générales
+                d'utilisation</span
+              >
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-5">
+      <div class="card-body">
+        <button type="button" name="button" class="btn btn-lg btn-primary" *ngIf="active >= 1 && active <= 4" (click)="previous()">
+          Précédent
+        </button>
+
+        <button
+          type="button"
+          name="button"
+          class="btn btn-lg btn-primary float-end"
+          *ngIf="active >= 0 && active < 4"
+          [disabled]="isFormInvalid(active)"
+          (click)="next()"
+        >
+          Suivant
+        </button>
+
+        <button
+          type="submit"
+          name="button"
+          class="btn btn-lg btn-primary float-end"
+          *ngIf="active === 4"
+          (click)="save()"
+          [disabled]="!accepterCondition || isSaving"
+        >
+          Enregistrer la demande
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

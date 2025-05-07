@@ -1,0 +1,33 @@
+{
+  "intershipManagementApp": {
+    "demande": {
+      "home": {
+        "title": "Demandes de stage",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer une nouvelle demande de stage",
+        "createOrEditLabel": "Créer ou éditer une demande de stage",
+        "notFound": "Aucun Demande trouvé"
+      },
+      "created": "Une nouvelle demande de stage a été créée avec l'identifiant {{ param }}",
+      "updated": "La demande de stage avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "La demande de stage avec l'identifiant {{ param }} a été supprimée",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer la demande de stage {{ id }} ?"
+      },
+      "detail": {
+        "title": "Demande de stage"
+      },
+      "id": "ID",
+      "dateDemande": "Date de la demande",
+      "dateDebut": "Date de début",
+      "dateFin": "Date de fin",
+      "sujet": "Sujet du stage",
+      "statut": "Statut",
+      "etudiant": "Etudiant",
+      "service": "Service",
+      "encadrant": "Encadrant",
+      "formation": "Formation",
+      "documents": "Documents"
+    }
+  }
+}

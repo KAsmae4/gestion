@@ -1,0 +1,48 @@
+<div class="card jh-card">
+  <div *ngIf="encadrant">
+    <h2 data-cy="encadrantDetailsHeading"><span appTranslate="intershipManagementApp.encadrant.detail.title">Encadrant</span></h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ encadrant.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.encadrant.nom">Nom</span></dt>
+      <dd>
+        <span>{{ encadrant.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.encadrant.prenom">Prenom</span></dt>
+      <dd>
+        <span>{{ encadrant.prenom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.encadrant.telephone">Telephone</span></dt>
+      <dd>
+        <span>{{ encadrant.telephone }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.encadrant.email">Email</span></dt>
+      <dd>
+        <span>{{ encadrant.email }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.encadrant.service">Service</span></dt>
+      <dd>
+        <div *ngIf="encadrant.service">
+          <a [routerLink]="['/gestion/service-hospitalier', encadrant.service.id, 'view']">{{ encadrant.service.nom }}</a>
+        </div>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/encadrant', encadrant.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

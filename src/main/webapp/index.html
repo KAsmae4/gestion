@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Demande de stage</title>
+    <meta name="description" content="Outils de gestion des demandes de stage" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <base href="/" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="manifest" href="manifest.webapp" />
+    <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
+    <style>
+      .loader {
+        border: 5px solid #f3f3f3; /* Light grey */
+        border-top: 5px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+        margin-top: 1rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .splash-container {
+        background: #fff;
+        position: fixed;
+        z-index: 99999999;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 1;
+        -webkit-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+      }
+
+      .splash-content {
+        font-family: Roboto;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+    <app-app>
+      <div class="app-loading">
+        <!-- Splash screen -->
+        <div class="splash-container" style="">
+          <div class="splash-content">
+            <div class="loader"></div>
+          </div>
+        </div>
+        <!-- / Splash screen -->
+
+        <div id="error-container" style="display: none">
+          <!-- This content is for troubleshooting purpose and will be removed when app renders -->
+          <h1>An error has occurred :-(</h1>
+        </div>
+      </div>
+    </app-app>
+    <noscript>
+      <h1>You must enable JavaScript to view this page.</h1>
+    </noscript>
+    <script type="text/javascript">
+      // show an error message if the app loading takes more than 4 sec
+      window.onload = function () {
+        setTimeout(showError, 4000);
+      };
+      function showError() {
+        var errorElm = document.getElementById('jhipster-error');
+        if (errorElm && errorElm.style) {
+          errorElm.style.display = 'block';
+        }
+      }
+    </script>
+    <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>-->
+  </body>
+</html>

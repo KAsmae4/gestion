@@ -1,0 +1,255 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-documents-heading"
+        data-cy="DocumentsCreateUpdateHeading"
+        appTranslate="intershipManagementApp.documents.home.createOrEditLabel"
+      >
+        Create or edit a Documents
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.cv" for="field_cv">Cv</label>
+          <div>
+            <div *ngIf="editForm.get('cv')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('cv')!.value!, editForm.get('cvContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('cvContentType')!.value }}, {{ byteSize(editForm.get('cv')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ cv: undefined, cvContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_cv" data-cy="cv" (change)="setFileData($event, 'cv', false)" appTranslate="entity.action.addblob" />
+          </div>
+          <input type="hidden" class="form-control" name="cv" id="field_cv" data-cy="cv" formControlName="cv" />
+          <input type="hidden" class="form-control" name="cvContentType" id="field_cvContentType" formControlName="cvContentType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.cin" for="field_cin">CIN</label>
+          <div>
+            <div *ngIf="editForm.get('cin')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('cin')!.value!, editForm.get('cinContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('cinContentType')!.value }}, {{ byteSize(editForm.get('cin')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ cin: undefined, cinContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_cin"
+              data-cy="cin"
+              (change)="setFileData($event, 'cin', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="cin" id="field_cin" data-cy="cin" formControlName="cin" />
+          <input type="hidden" class="form-control" name="cinContentType" id="field_cinContentType" formControlName="cinContentType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.lettreMotivation" for="field_lettreMotivation"
+            >Lettre de motivation</label
+          >
+          <div>
+            <div *ngIf="editForm.get('lettreMotivation')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('lettreMotivation')!.value!, editForm.get('lettreMotivationContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('lettreMotivationContentType')!.value }}, {{ byteSize(editForm.get('lettreMotivation')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ lettreMotivation: undefined, lettreMotivationContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_lettreMotivation"
+              data-cy="lettreMotivation"
+              (change)="setFileData($event, 'lettreMotivation', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="lettreMotivation"
+            id="field_lettreMotivation"
+            data-cy="lettreMotivation"
+            formControlName="lettreMotivation"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="lettreMotivationContentType"
+            id="field_lettreMotivationContentType"
+            formControlName="lettreMotivationContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.attestationScolarite" for="field_attestationScolarite"
+            >Attestation de scolarité</label
+          >
+          <div>
+            <div *ngIf="editForm.get('attestationScolarite')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('attestationScolarite')!.value!, editForm.get('attestationScolariteContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('attestationScolariteContentType')!.value }},
+                {{ byteSize(editForm.get('attestationScolarite')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ attestationScolarite: undefined, attestationScolariteContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_attestationScolarite"
+              data-cy="cv"
+              (change)="setFileData($event, 'attestationScolarite', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="attestationScolarite"
+            id="field_attestationScolarite"
+            data-cy="attestationScolarite"
+            formControlName="attestationScolarite"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="attestationScolariteContentType"
+            id="field_attestationScolariteContentType"
+            formControlName="attestationScolariteContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.attestationAssurance" for="field_attestationAssurance"
+            >Attestation Assurance</label
+          >
+          <div>
+            <div *ngIf="editForm.get('attestationAssurance')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('attestationAssurance')!.value!, editForm.get('attestationAssuranceContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('attestationAssuranceContentType')!.value }},
+                {{ byteSize(editForm.get('attestationAssurance')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ attestationAssurance: undefined, attestationAssuranceContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_attestationAssurance"
+              data-cy="attestationAssurance"
+              (change)="setFileData($event, 'attestationAssurance', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="attestationAssurance"
+            id="field_attestationAssurance"
+            data-cy="attestationAssurance"
+            formControlName="attestationAssurance"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="attestationAssuranceContentType"
+            id="field_attestationAssuranceContentType"
+            formControlName="attestationAssuranceContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.documents.demande" for="field_demande">Demande</label>
+          <select
+            class="form-control"
+            id="field_demande"
+            data-cy="demande"
+            name="demande"
+            formControlName="demande"
+            [compareWith]="compareDemande"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="demandeOption" *ngFor="let demandeOption of demandesCollection">{{ demandeOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

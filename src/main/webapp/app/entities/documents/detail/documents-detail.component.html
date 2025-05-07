@@ -1,0 +1,79 @@
+<div class="card jh-card">
+  <div *ngIf="documents">
+    <h2 data-cy="documentsDetailsHeading"><span appTranslate="intershipManagementApp.documents.detail.title">Documents</span></h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ documents.id }}</span>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.cv">Cv</span></dt>
+      <dd>
+        <div *ngIf="documents.cv">
+          <a (click)="openFile(documents.cv, documents.cvContentType)" appTranslate="entity.action.open">Open</a>
+          {{ documents.cvContentType }}, {{ byteSize(documents.cv) }}
+        </div>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.cin">CIN</span></dt>
+      <dd>
+        <div *ngIf="documents.cin">
+          <a (click)="openFile(documents.cin, documents.cinContentType)" appTranslate="entity.action.open">Open</a>
+          {{ documents.cinContentType }}, {{ byteSize(documents.cin) }}
+        </div>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.lettreMotivation">Lettre de motivation</span></dt>
+      <dd>
+        <div *ngIf="documents.lettreMotivation">
+          <a (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)" appTranslate="entity.action.open"
+            >Open</a
+          >
+          {{ documents.lettreMotivationContentType }}, {{ byteSize(documents.lettreMotivation) }}
+        </div>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.attestationScolarite">Attestation de scolarite ou diplome</span></dt>
+      <dd>
+        <div *ngIf="documents.attestationScolarite">
+          <a (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)" appTranslate="entity.action.open"
+            >Open</a
+          >
+          {{ documents.attestationScolariteContentType }}, {{ byteSize(documents.attestationScolarite) }}
+        </div>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.attestationAssurance">Attestation Assurance</span></dt>
+      <dd>
+        <div *ngIf="documents.attestationAssurance">
+          <a (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)" appTranslate="entity.action.open"
+            >Open</a
+          >
+          {{ documents.attestationAssuranceContentType }}, {{ byteSize(documents.attestationAssurance) }}
+        </div>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.documents.demande">Demande</span></dt>
+      <dd>
+        <div *ngIf="documents.demande">
+          <a [routerLink]="['/gestion/demande', documents.demande.id, 'view']">{{ documents.demande.id }}</a>
+        </div>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/documents', documents.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

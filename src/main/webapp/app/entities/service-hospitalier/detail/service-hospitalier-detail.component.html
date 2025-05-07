@@ -1,0 +1,58 @@
+<div class="card jh-card">
+  <div *ngIf="serviceHospitalier">
+    <h2 data-cy="serviceHospitalierDetailsHeading">
+      <span appTranslate="intershipManagementApp.serviceHospitalier.detail.title">Service Hospitalier</span>
+    </h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ serviceHospitalier.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.serviceHospitalier.nom">Nom</span></dt>
+      <dd>
+        <span>{{ serviceHospitalier.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.serviceHospitalier.emplacement">Emplacement</span></dt>
+      <dd>
+        <span>{{ serviceHospitalier.emplacement }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.serviceHospitalier.typeService">Type Service</span></dt>
+      <dd>
+        <div *ngIf="serviceHospitalier.typeService">
+          <a [routerLink]="['/gestion/type-service', serviceHospitalier.typeService.id, 'view']">{{
+            serviceHospitalier.typeService.nom
+          }}</a>
+        </div>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.serviceHospitalier.chefService">Chef Service</span></dt>
+      <dd>
+        <div *ngIf="serviceHospitalier.chefService">
+          <a [routerLink]="['/gestion/chef-service', serviceHospitalier.chefService.id, 'view']">
+            {{ serviceHospitalier.chefService.nom }} {{ serviceHospitalier.chefService.prenom }}
+          </a>
+        </div>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.serviceHospitalier.hopital">Hopital</span></dt>
+      <dd>
+        <div *ngIf="serviceHospitalier.hopital">
+          <a [routerLink]="['/gestion/hopital', serviceHospitalier.hopital.id, 'view']">{{ serviceHospitalier.hopital.nom }}</a>
+        </div>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/service-hospitalier', serviceHospitalier.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

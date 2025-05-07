@@ -1,0 +1,42 @@
+<div class="card jh-card">
+  <div *ngIf="hopital">
+    <h2 data-cy="hopitalDetailsHeading"><span appTranslate="intershipManagementApp.hopital.detail.title">Hopital</span></h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ hopital.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.hopital.nom">Nom</span></dt>
+      <dd>
+        <span>{{ hopital.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.hopital.telephone">Telephone</span></dt>
+      <dd>
+        <span>{{ hopital.telephone }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.hopital.adresse">Adresse</span></dt>
+      <dd>
+        <span>{{ hopital.adresse }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.hopital.ville">Ville</span></dt>
+      <dd>
+        <span>{{ hopital.ville }}</span>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/hopital', hopital.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

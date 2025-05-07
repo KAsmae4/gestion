@@ -1,0 +1,29 @@
+{
+  "intershipManagementApp": {
+    "documents": {
+      "home": {
+        "title": "Documents",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Documents",
+        "createOrEditLabel": "Créer ou éditer un Documents",
+        "notFound": "Aucun Documents trouvé"
+      },
+      "created": "Un nouveau Documents a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Documents avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Documents avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Documents {{ id }} ?"
+      },
+      "detail": {
+        "title": "Documents"
+      },
+      "id": "ID",
+      "cv": "Cv",
+      "cin": "CIN",
+      "lettreMotivation": "Lettre de motivation",
+      "attestationScolarite": "Attestation de scolarité ou diplôme",
+      "attestationAssurance": "Attestation Assurance",
+      "demande": "Demande"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "applications": ["intershipManagement"],
+  "changelogDate": "20230418101515",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "demande",
+  "fields": [
+    {
+      "fieldName": "dateDemande",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sujet",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "StatutDemande",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DEMANDEE,ACCEPTEE,REFUSEE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Demande",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "etudiant",
+      "relationshipName": "etudiant",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "serviceHospitalier",
+      "relationshipName": "service",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "encadrant",
+      "otherEntityRelationshipName": "demande",
+      "relationshipName": "encadrant",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "demande",
+      "ownerSide": false,
+      "relationshipName": "formation",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

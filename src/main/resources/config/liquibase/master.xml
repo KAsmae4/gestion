@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="floatType" value="float" dbms="mysql"/>
+    <property name="clobType" value="clob" dbms="mysql"/>
+    <property name="blobType" value="longblob" dbms="mysql"/>
+    <property name="uuidType" value="varchar(36)" dbms="mysql"/>
+    <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222433_added_entity_Etudiant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222533_added_entity_Demande.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222633_added_entity_ChefService.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222733_added_entity_Encadrant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222833_added_entity_Formation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222933_added_entity_TypeFormation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418223033_added_entity_Hopital.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418223133_added_entity_ServiceHospitalier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418223233_added_entity_TypeService.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230423114557_added_entity_Documents.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230418222533_added_entity_constraints_Demande.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222733_added_entity_constraints_Encadrant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418222833_added_entity_constraints_Formation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230418223133_added_entity_constraints_ServiceHospitalier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230423114557_added_entity_constraints_Documents.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

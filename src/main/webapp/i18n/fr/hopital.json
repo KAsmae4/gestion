@@ -1,0 +1,27 @@
+{
+  "intershipManagementApp": {
+    "hopital": {
+      "home": {
+        "title": "Hôpitaux",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau hôpital",
+        "createOrEditLabel": "Créer ou éditer un hôpital",
+        "notFound": "Aucun hôpital trouvé"
+      },
+      "created": "Un nouveau hôpital a été créé avec l'identifiant {{ param }}",
+      "updated": "L'hôpital avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "L'hôpital avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer l'hôpital {{ id }} ?"
+      },
+      "detail": {
+        "title": "Hôpital"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "telephone": "Téléphone",
+      "adresse": "Adresse",
+      "ville": "Ville"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<div class="report-print p-5">
+  <div class="d-flex justify-content-between mb-2">
+    <div>
+      <span class="logo-fr-img"></span>
+      <p>N _____________/DOSAP</p>
+      <p>LE DIRECTEUR</p>
+    </div>
+    <span class="logo-img"></span>
+    <span class="logo-ar-img"></span>
+  </div>
+
+  <h1 class="text-decoration-underline text-center mb-5">Note de stage</h1>
+
+  <p>
+    Suite a sa demande,
+    <strong
+      >{{ 'intershipManagementApp.Civilite.' + demande?.etudiant?.civilite | translate }} {{ demande?.etudiant?.nom }}
+      {{ demande?.etudiant?.prenom }}</strong
+    >,
+    <span *ngIf="demande?.etudiant?.civilite == 'MME'; else etudiant">étudiante</span>
+    en {{ demande?.formation?.typeFormation?.nom }} {{ demande?.formation?.nom }} à l'{{ demande?.formation?.nomEtablissement }} à
+    {{ demande?.formation?.ville }}, est <span *ngIf="demande?.etudiant?.civilite == 'MME'; else autorise">autorisée</span> a effectuer un
+    stage de ({{ dureeStage }}) mois, à compter
+    <strong>du {{ demande?.dateDebut | formatFullDate }} au {{ demande?.dateFin | formatFullDate }}</strong>
+    au niveau du service {{ demande?.service?.nom }}, sous le tutorat du
+    <strong>Dr {{ demande?.encadrant?.prenom }} {{ demande?.encadrant?.prenom }}</strong
+    >, chef de service.
+  </p>
+
+  <ng-template #etudiant>étudiant</ng-template>
+  <ng-template #autorise>autorisé</ng-template>
+
+  <p>
+    Dès réception de la présente note, <span *ngIf="demande?.etudiant?.civilite == 'MME'; else interesse">l'intérssée</span> se présentera à
+    Monsieur le Directeur de l'hôpital Ar-razi qui lui donnera les instructions nécessaires à son stage.
+  </p>
+
+  <ng-template #interesse>l'intérssé</ng-template>
+
+  <p>Des comptes rendus de prise et de cessation de stage me seront adréssés à des fin de régularisations administratives.</p>
+
+  <p class="text-decoration-underline">
+    <strong>NB : </strong>La présente note ne signifie pas que le stage a eu lieu et ne fait pas foi d'une attestation de stage.
+  </p>
+
+  <div class="mt-5 mb-5">
+    <h4 class="text-decoration-underline">Ampliations</h4>
+    <ul>
+      <li>Le secretaire Générale du CHU</li>
+      <li>Chef de service DOSAP</li>
+      <li>L'interessée</li>
+      <li>Le dossier</li>
+    </ul>
+  </div>
+
+  <hr />
+  <div class="text-center fst-italic mt-4 mb-4">
+    <p class="mb-0">Centre Hospitalier Universitaire Mohammed VI - Marrakech</p>
+    <p class="mb-0">BP. 2360 Marrakech pricipal <i>http://chumarrakech.ma</i></p>
+    <p class="mb-0">Tel: 0524 300 700/701/629</p>
+    <p class="mb-0">Fax: 0524 300 631</p>
+  </div>
+</div>

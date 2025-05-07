@@ -1,0 +1,28 @@
+{
+  "intershipManagementApp": {
+    "serviceHospitalier": {
+      "home": {
+        "title": "Service Hospitaliers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Service Hospitalier",
+        "createOrEditLabel": "Create or edit a Service Hospitalier",
+        "notFound": "No Service Hospitaliers found"
+      },
+      "created": "A new Service Hospitalier is created with identifier {{ param }}",
+      "updated": "A Service Hospitalier is updated with identifier {{ param }}",
+      "deleted": "A Service Hospitalier is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Service Hospitalier {{ id }}?"
+      },
+      "detail": {
+        "title": "Service Hospitalier"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "emplacement": "Emplacement",
+      "typeService": "Type Service",
+      "chefService": "Chef Service",
+      "hopital": "Hopital"
+    }
+  }
+}

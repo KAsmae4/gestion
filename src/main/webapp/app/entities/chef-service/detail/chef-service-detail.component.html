@@ -1,0 +1,42 @@
+<div class="card jh-card">
+  <div *ngIf="chefService">
+    <h2 data-cy="chefServiceDetailsHeading"><span appTranslate="intershipManagementApp.chefService.detail.title">Chef Service</span></h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ chefService.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.chefService.nom">Nom</span></dt>
+      <dd>
+        <span>{{ chefService.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.chefService.prenom">Prenom</span></dt>
+      <dd>
+        <span>{{ chefService.prenom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.chefService.telephone">Telephone</span></dt>
+      <dd>
+        <span>{{ chefService.telephone }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.chefService.email">Email</span></dt>
+      <dd>
+        <span>{{ chefService.email }}</span>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/chef-service', chefService.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-service-hospitalier-heading"
+        data-cy="ServiceHospitalierCreateUpdateHeading"
+        appTranslate="intershipManagementApp.serviceHospitalier.home.createOrEditLabel"
+      >
+        Create or edit a Service Hospitalier
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.serviceHospitalier.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" appTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.serviceHospitalier.emplacement" for="field_emplacement"
+            >Emplacement</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emplacement"
+            id="field_emplacement"
+            data-cy="emplacement"
+            formControlName="emplacement"
+          />
+          <div *ngIf="editForm.get('emplacement')!.invalid && (editForm.get('emplacement')!.dirty || editForm.get('emplacement')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('emplacement')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.serviceHospitalier.typeService" for="field_typeService"
+            >Type Service</label
+          >
+          <select
+            class="form-control"
+            id="field_typeService"
+            data-cy="typeService"
+            name="typeService"
+            formControlName="typeService"
+            [compareWith]="compareTypeService"
+          >
+            <option *ngIf="!editForm.get('typeService')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="typeServiceOption" *ngFor="let typeServiceOption of typeServicesSharedCollection">
+              {{ typeServiceOption.nom }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['typeService'])!.invalid && (editForm.get(['typeService'])!.dirty || editForm.get(['typeService'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['typeService'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.serviceHospitalier.chefService" for="field_chefService"
+            >Chef Service</label
+          >
+          <select
+            class="form-control"
+            id="field_chefService"
+            data-cy="chefService"
+            name="chefService"
+            formControlName="chefService"
+            [compareWith]="compareChefService"
+          >
+            <option *ngIf="!editForm.get('chefService')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="chefServiceOption" *ngFor="let chefServiceOption of chefServicesSharedCollection">
+              {{ chefServiceOption.nom }} {{ chefServiceOption.prenom }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['chefService'])!.invalid && (editForm.get(['chefService'])!.dirty || editForm.get(['chefService'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['chefService'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="intershipManagementApp.serviceHospitalier.hopital" for="field_hopital">Hopital</label>
+          <select
+            class="form-control"
+            id="field_hopital"
+            data-cy="hopital"
+            name="hopital"
+            formControlName="hopital"
+            [compareWith]="compareHopital"
+          >
+            <option *ngIf="!editForm.get('hopital')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="hopitalOption" *ngFor="let hopitalOption of hopitalsSharedCollection">{{ hopitalOption.nom }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['hopital'])!.invalid && (editForm.get(['hopital'])!.dirty || editForm.get(['hopital'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['hopital'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

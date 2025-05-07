@@ -1,0 +1,25 @@
+{
+  "intershipManagementApp": {
+    "typeFormation": {
+      "home": {
+        "title": "Types de formation",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau type de formation",
+        "createOrEditLabel": "Créer ou éditer un type de formation",
+        "notFound": "Aucun type de formation trouvé"
+      },
+      "created": "Un nouveau type de formation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le type de formation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le type de formation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le type de formation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type de formation"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "type": "Type"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="card jh-card mb-3">
+    <h2 id="app-demande-heading" data-cy="DemandeCreateUpdateHeading" appTranslate="intershipManagementApp.demande.home.createOrEditLabel">
+      Create or edit a Demande
+    </h2>
+
+    <app-alert-error></app-alert-error>
+
+    <div class="p-5">
+      <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+        <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.dateDemande" for="field_dateDemande">Date Demande</label>
+        <div class="input-group p-0">
+          <input
+            id="field_dateDemande"
+            data-cy="dateDemande"
+            type="text"
+            class="form-control"
+            name="dateDemande"
+            ngbDatepicker
+            #dateDemandeDp="ngbDatepicker"
+            formControlName="dateDemande"
+          />
+          <button type="button" class="btn btn-secondary" (click)="dateDemandeDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.dateDebut" for="field_dateDebut">Date de début</label>
+        <div class="input-group p-0">
+          <input
+            id="field_dateDebut"
+            data-cy="dateDebut"
+            type="text"
+            class="form-control"
+            name="dateDebut"
+            ngbDatepicker
+            #dateDebutDp="ngbDatepicker"
+            formControlName="dateDebut"
+          />
+          <button type="button" class="btn btn-secondary" (click)="dateDebutDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+        <div *ngIf="editForm.get('dateDebut')!.invalid && (editForm.get('dateDebut')!.dirty || editForm.get('dateDebut')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('dateDebut')?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.dateFin" for="field_dateFin">Date de fin</label>
+        <div class="input-group p-0">
+          <input
+            id="field_dateFin"
+            data-cy="dateFin"
+            type="text"
+            class="form-control"
+            name="dateFin"
+            ngbDatepicker
+            #dateFinDp="ngbDatepicker"
+            formControlName="dateFin"
+          />
+          <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+        <div *ngIf="editForm.get('dateFin')!.invalid && (editForm.get('dateFin')!.dirty || editForm.get('dateFin')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('dateFin')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.sujet" for="field_sujet">Sujet</label>
+        <textarea rows="4" class="form-control" name="sujet" id="field_sujet" data-cy="sujet" formControlName="sujet"></textarea>
+        <div *ngIf="editForm.get('sujet')!.invalid && (editForm.get('sujet')!.dirty || editForm.get('sujet')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('sujet')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.statut" for="field_statut">Statut</label>
+        <select class="form-control" name="statut" formControlName="statut" id="field_statut" data-cy="statut">
+          <option [ngValue]="null">{{ 'intershipManagementApp.StatutDemande.null' | translate }}</option>
+          <option *ngFor="let statutDemande of statutDemandeValues" [value]="statutDemande">
+            {{ 'intershipManagementApp.StatutDemande.' + statutDemande | translate }}
+          </option>
+        </select>
+        <div *ngIf="editForm.get('statut')!.invalid && (editForm.get('statut')!.dirty || editForm.get('statut')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('statut')?.errors?.required" appTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.formation" for="field_formation">Formation</label>
+        <select
+          class="form-control"
+          id="field_formation"
+          data-cy="formation"
+          name="formation"
+          formControlName="formation"
+          [compareWith]="compareFormation"
+        >
+          <option [ngValue]="null"></option>
+          <option [ngValue]="formationOption" *ngFor="let formationOption of formationsCollection">{{ formationOption.nom }}</option>
+        </select>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.etudiant" for="field_etudiant">Etudiant</label>
+        <select
+          class="form-control"
+          id="field_etudiant"
+          data-cy="etudiant"
+          name="etudiant"
+          formControlName="etudiant"
+          [compareWith]="compareEtudiant"
+        >
+          <option *ngIf="!editForm.get('etudiant')!.value" [ngValue]="null" selected></option>
+          <option [ngValue]="etudiantOption" *ngFor="let etudiantOption of etudiantsSharedCollection">
+            {{ etudiantOption.nom }} {{ etudiantOption.prenom }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="editForm.get(['etudiant'])!.invalid && (editForm.get(['etudiant'])!.dirty || editForm.get(['etudiant'])!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get(['etudiant'])?.errors?.required" appTranslate="entity.validation.required">
+          This field is required.
+        </small>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.service" for="field_service">Service</label>
+        <select
+          class="form-control"
+          id="field_service"
+          data-cy="service"
+          name="service"
+          formControlName="service"
+          [compareWith]="compareServiceHospitalier"
+        >
+          <option [ngValue]="null"></option>
+          <option [ngValue]="serviceHospitalierOption" *ngFor="let serviceHospitalierOption of serviceHospitaliersSharedCollection">
+            {{ serviceHospitalierOption.nom }}
+          </option>
+        </select>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" appTranslate="intershipManagementApp.demande.encadrant" for="field_encadrant">Encadrant</label>
+        <select
+          class="form-control"
+          id="field_encadrant"
+          data-cy="encadrant"
+          name="encadrant"
+          formControlName="encadrant"
+          [compareWith]="compareEncadrant"
+        >
+          <option [ngValue]="null"></option>
+          <option [ngValue]="encadrantOption" *ngFor="let encadrantOption of encadrantsSharedCollection">
+            {{ encadrantOption.nom }} {{ encadrantOption.prenom }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancel</span>
+    </button>
+
+    <button
+      type="submit"
+      id="save-entity"
+      data-cy="entityCreateSaveButton"
+      [disabled]="editForm.invalid || isSaving"
+      class="btn btn-primary"
+    >
+      <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Save</span>
+    </button>
+  </div>
+</form>

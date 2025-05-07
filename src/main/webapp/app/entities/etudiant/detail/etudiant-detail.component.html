@@ -1,0 +1,140 @@
+<div *ngIf="etudiant">
+  <h2 data-cy="etudiantDetailsHeading"><span appTranslate="intershipManagementApp.etudiant.detail.title">Etudiant</span></h2>
+
+  <hr />
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="card jh-card mb-3">
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ etudiant.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.etudiant.cin">CIN</span></dt>
+      <dd>
+        <span>{{ etudiant.cin }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.etudiant.nom">Nom</span></dt>
+      <dd>
+        <span appTranslate="intershipManagementApp.Civilite.{{ etudiant.civilite }}">{{ etudiant.civilite }}</span>
+        <span>{{ etudiant.nom }}</span> <span>{{ etudiant.prenom }}</span>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.etudiant.telephone">Telephone</span></dt>
+      <dd>
+        <span>{{ etudiant.telephone }}</span>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.etudiant.email">Email</span></dt>
+      <dd>
+        <span>{{ etudiant.email }}</span>
+      </dd>
+
+      <dt><span appTranslate="intershipManagementApp.etudiant.dateNaissance">Date Naissance</span></dt>
+      <dd>
+        <span>{{ etudiant.dateNaissance | formatMediumDate }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.etudiant.adresse">Adresse</span></dt>
+      <dd>
+        <span>{{ etudiant.adresse }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.etudiant.ville">Ville</span></dt>
+      <dd>
+        <span>{{ etudiant.ville }}</span>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="card jh-card mb-3">
+    <div class="table-responsive table-entities" id="entities" *ngIf="demandes && demandes.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.statut">Statut</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateDemande">Date Demande</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateDebut">Date Debut</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateFin">Date Fin</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let demande of demandes; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/gestion/demande', demande.id, 'view']">{{ demande.id }}</a>
+            </td>
+            <td>
+              <span
+                appTranslate="{{ 'intershipManagementApp.StatutDemande.' + demande.statut }}"
+                class="badge rounded-pill text-bg-primary"
+                [ngClass]="{ 'text-bg-success': demande.statut === 'ACCEPTEE', 'text-bg-danger': demande.statut === 'REFUSEE' }"
+              >
+                {{ demande.statut }}
+              </span>
+            </td>
+            <td>{{ demande.dateDemande | formatMediumDate }}</td>
+            <td>{{ demande.dateDebut | formatMediumDate }}</td>
+            <td>{{ demande.dateFin | formatMediumDate }}</td>
+            <td class="text-end">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/demande', demande.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/demande', demande.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/etudiant', etudiant.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

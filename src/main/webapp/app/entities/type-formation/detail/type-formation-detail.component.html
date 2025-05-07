@@ -1,0 +1,36 @@
+<div class="card jh-card">
+  <div *ngIf="typeFormation">
+    <h2 data-cy="typeFormationDetailsHeading">
+      <span appTranslate="intershipManagementApp.typeFormation.detail.title">Type Formation</span>
+    </h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ typeFormation.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.typeFormation.nom">Nom</span></dt>
+      <dd>
+        <span>{{ typeFormation.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.typeFormation.type">Type</span></dt>
+      <dd>
+        <span>{{ typeFormation.type }}</span>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/type-formation', typeFormation.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

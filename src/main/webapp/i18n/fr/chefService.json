@@ -1,0 +1,27 @@
+{
+  "intershipManagementApp": {
+    "chefService": {
+      "home": {
+        "title": "Chefs de service",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau chef de service",
+        "createOrEditLabel": "Créer ou éditer un chef de service",
+        "notFound": "Aucun chef de service trouvé"
+      },
+      "created": "Un nouveau chef de service a été créé avec l'identifiant {{ param }}",
+      "updated": "Le chef de service avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le chef de service avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le chef de service {{ id }} ?"
+      },
+      "detail": {
+        "title": "Chef de service"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "prenom": "Prénom",
+      "telephone": "Téléphone",
+      "email": "Email"
+    }
+  }
+}

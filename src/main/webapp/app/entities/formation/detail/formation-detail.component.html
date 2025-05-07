@@ -1,0 +1,52 @@
+<div class="card jh-card">
+  <div *ngIf="formation">
+    <h2 data-cy="formationDetailsHeading"><span appTranslate="intershipManagementApp.formation.detail.title">Formation</span></h2>
+
+    <hr />
+
+    <app-alert-error></app-alert-error>
+
+    <app-alert></app-alert>
+
+    <dl class="row-md jh-entity-details">
+      <dt><span appTranslate="global.field.id">ID</span></dt>
+      <dd>
+        <span>{{ formation.id }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.nom">Nom</span></dt>
+      <dd>
+        <span>{{ formation.nom }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.nomEtablissement">Nom de l'etablissement</span></dt>
+      <dd>
+        <span>{{ formation.nomEtablissement }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.telephone">Telephone</span></dt>
+      <dd>
+        <span>{{ formation.telephone }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.adresse">Adresse</span></dt>
+      <dd>
+        <span>{{ formation.adresse }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.ville">Ville</span></dt>
+      <dd>
+        <span>{{ formation.ville }}</span>
+      </dd>
+      <dt><span appTranslate="intershipManagementApp.formation.typeFormation">Type Formation</span></dt>
+      <dd>
+        <div *ngIf="formation.typeFormation">
+          <a [routerLink]="['/gestion/type-formation', formation.typeFormation.id, 'view']">{{ formation.typeFormation.nom }}</a>
+        </div>
+      </dd>
+    </dl>
+
+    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+    </button>
+
+    <button type="button" [routerLink]="['/gestion/formation', formation.id, 'edit']" class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,154 @@
+<div class="row mb-3">
+  <div class="col-md-6 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h4 class="mb-1 mt-1"><span class="fw-bold text-success">2583</span> stages</h4>
+          <p class="text-muted mb-0 fw-bolder">depuis 2020</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h4 class="mb-1 mt-1"><span class="fw-bold text-success">120</span></h4>
+          <p class="text-muted mb-0 fw-bolder">Stages en cours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h4 class="mb-1 mt-1"><span class="fw-bold text-success">3</span> mois</h4>
+          <p class="text-muted mb-0 fw-bolder">durée moyenne des stages</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h4 class="mb-1 mt-1"><span class="fw-bold text-success">29</span></h4>
+          <p class="text-muted mb-0 fw-bolder">Formations</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <div class="card jh-card">
+      <canvas
+        baseChart
+        style="height: 250px"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <div class="card jh-card">
+      <canvas baseChart style="height: 250px" [data]="pieChartData" [type]="'pie'" [options]="pieChartOptions"> </canvas>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <div class="card jh-card">
+      <canvas baseChart style="height: 250px" [data]="pieChartGenderData" [type]="'pie'" [options]="pieChartGenderOptions"> </canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card jh-card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Demandes non traitées</h5>
+    <div class="table-responsive table-entities" id="entities" *ngIf="demandes && demandes.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.statut">Statut</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateDemande">Date Demande</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateDebut">Date Debut</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span appTranslate="intershipManagementApp.demande.dateFin">Date Fin</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let demande of demandes; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/gestion/demande', demande.id, 'view']">{{ demande.id }}</a>
+            </td>
+            <td>
+              <span
+                appTranslate="{{ 'intershipManagementApp.StatutDemande.' + demande.statut }}"
+                class="badge rounded-pill text-bg-primary"
+                [ngClass]="{ 'text-bg-success': demande.statut === 'ACCEPTEE', 'text-bg-danger': demande.statut === 'REFUSEE' }"
+              >
+                {{ demande.statut }}
+              </span>
+            </td>
+            <td>{{ demande.dateDemande | formatMediumDate }}</td>
+            <td>{{ demande.dateDebut | formatMediumDate }}</td>
+            <td>{{ demande.dateFin | formatMediumDate }}</td>
+            <td class="text-end">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/demande', demande.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/demande', demande.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

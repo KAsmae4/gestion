@@ -1,0 +1,113 @@
+<div class="card jh-card">
+  <h2 id="page-heading" data-cy="TypeFormationHeading">
+    <span appTranslate="intershipManagementApp.typeFormation.home.title">Type Formations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="intershipManagementApp.typeFormation.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-type-formation"
+        [routerLink]="['/gestion/type-formation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="intershipManagementApp.typeFormation.home.createLabel"> Create a new Type Formation </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="typeFormations?.length === 0">
+    <span appTranslate="intershipManagementApp.typeFormation.home.notFound">No Type Formations found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="typeFormations && typeFormations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nom">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.typeFormation.nom">Nom</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="type">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.typeFormation.type">Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let typeFormation of typeFormations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/gestion/type-formation', typeFormation.id, 'view']">{{ typeFormation.id }}</a>
+          </td>
+          <td>{{ typeFormation.nom }}</td>
+          <td>{{ typeFormation.type }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/type-formation', typeFormation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/type-formation', typeFormation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(typeFormation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="typeFormations && typeFormations.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+id;cin;civilite;nom;prenom;telephone;email;date_naissance;adresse;ville
+1;ABC123;MR;Najib;Mehdi;0623181845;najib.mehdi@hotmail.com;2000-04-18;345 Avenue la marche verte;Rabat
+2;DC885;MME;Merzouki;Sanaa;0635181843;merzoukisanaa@hotmail.com;2001-04-18;99 Rue El Khouzam;Marrakech
+3;RE663;MME;Alami;Nouhaila;0635181845;alami-nouhaila@gmail.com;1999-04-17;12 Bd Mohamed IV;Marrakech

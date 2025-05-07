@@ -1,0 +1,5 @@
+id;nom;emplacement;type_service_id;chef_service_id;hopital_id
+1;Cardiologie;Marrakech;2;1;1
+2;Oncologie;Marrakech;2;1;1
+3;Chirurgie cardiaque;Marrakech;2;1;1
+

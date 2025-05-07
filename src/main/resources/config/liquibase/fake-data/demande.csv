@@ -1,0 +1,4 @@
+id;date_demande;date_debut;date_fin;sujet;statut;etudiant_id
+1;2023-04-17;2023-04-17;2023-04-17;Amélioration du modèle économique de l'hopital public au Maroc;ACCEPTEE;1
+2;2023-04-17;2023-04-18;2023-04-17;Etude sur l'impact financier sur la performance des hopitaux;DEMANDEE;2
+3;2023-04-18;2023-04-18;2023-04-17;Sujet à définir;REFUSEE;3

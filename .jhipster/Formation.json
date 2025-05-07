@@ -1,0 +1,50 @@
+{
+  "applications": ["intershipManagement"],
+  "changelogDate": "20230418101815",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "formation",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Formation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "demande",
+      "otherEntityRelationshipName": "formation",
+      "ownerSide": true,
+      "relationshipName": "demande",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "typeFormation",
+      "relationshipName": "typeFormation",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "no"
+}

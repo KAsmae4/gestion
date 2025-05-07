@@ -1,0 +1,24 @@
+{
+  "intershipManagementApp": {
+    "typeService": {
+      "home": {
+        "title": "Types de service",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau type de service",
+        "createOrEditLabel": "Créer ou éditer un type de service",
+        "notFound": "Aucun Type Service trouvé"
+      },
+      "created": "Un nouveau type de service a été créé avec l'identifiant {{ param }}",
+      "updated": "Le type de service avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le type de service avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le type de service {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type de service"
+      },
+      "id": "ID",
+      "nom": "Nom"
+    }
+  }
+}

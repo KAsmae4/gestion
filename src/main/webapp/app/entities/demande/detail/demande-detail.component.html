@@ -1,0 +1,164 @@
+<div *ngIf="demande">
+  <div class="d-flex justify-content-between">
+    <h2 data-cy="demandeDetailsHeading"><span appTranslate="intershipManagementApp.demande.detail.title">Demande</span></h2>
+    <div>
+      <a href="javascript:void(0)" target="_blank" [routerLink]="['/imprimer-note-stage', demande.id]" class="btn btn-primary">
+        <fa-icon icon="print"></fa-icon>&nbsp;Imprimer l'attestation de stage
+      </a>
+    </div>
+  </div>
+
+  <hr />
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div *ngIf="demande.statut === 'DEMANDEE'">
+    <div class="alert alert-warning d-flex flex-col justify-content-between">
+      <span>La demande est toujours en cours de traitement</span>
+      <div class="d-flex flex-row">
+        <button type="button" class="btn btn-success" (click)="accepterDemande()">Accepter la demande</button>
+        <button type="button" class="btn btn-danger ms-4" (click)="refuserDemande()">Refuser la demande</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Informations de la demande</h5>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ demande.id }}</span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.dateDemande">Date Demande</span></dt>
+        <dd>
+          <span>{{ demande.dateDemande | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.dateDebut">Date Debut</span></dt>
+        <dd>
+          <span>{{ demande.dateDebut | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.dateFin">Date Fin</span></dt>
+        <dd>
+          <span>{{ demande.dateFin | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.sujet">Sujet</span></dt>
+        <dd>
+          <span>{{ demande.sujet }}</span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.statut">Statut</span></dt>
+        <dd>
+          <span
+            appTranslate="{{ 'intershipManagementApp.StatutDemande.' + demande.statut }}"
+            class="badge rounded-pill text-bg-primary"
+            [ngClass]="{ 'text-bg-success': demande.statut === 'ACCEPTEE', 'text-bg-danger': demande.statut === 'REFUSEE' }"
+          >
+            {{ demande.statut }}
+          </span>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.etudiant">Etudiant</span></dt>
+        <dd>
+          <div *ngIf="demande.etudiant">
+            <a [routerLink]="['/gestion/etudiant', demande.etudiant.id, 'view']"
+              >{{ demande.etudiant.nom }} {{ demande.etudiant.prenom }} | <strong>{{ demande.etudiant.cin }}</strong></a
+            >
+          </div>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.formation">Formation</span></dt>
+        <dd>
+          <div *ngIf="demande.formation">
+            <a [routerLink]="['/gestion/formation', demande.formation.id, 'view']">{{ demande.formation.nom }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.service">Service</span></dt>
+        <dd>
+          <div *ngIf="demande.service">
+            <a [routerLink]="['/gestion/service-hospitalier', demande.service.id, 'view']">{{ demande.service.nom }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="intershipManagementApp.demande.encadrant">Encadrant</span></dt>
+        <dd>
+          <div *ngIf="demande.encadrant">
+            <a [routerLink]="['/gestion/encadrant', demande.encadrant.id, 'view']"
+              >{{ demande.encadrant.nom }} {{ demande.encadrant.prenom }}</a
+            >
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Documents</h5>
+
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div appTranslate="intershipManagementApp.documents.cv">Cv</div>
+          <div class="d-flex flex-column" *ngIf="documents && documents.cv">
+            <a (click)="openFile(documents.cv, documents.cvContentType)">Agrandir</a>
+            <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.cv)" type="application/pdf">
+              <p>Your browser does not support PDFs.</p>
+              <a (click)="openFile(documents.cv, documents.cvContentType)">Voir le document</a>
+            </object>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div appTranslate="intershipManagementApp.documents.cin">CIN</div>
+          <div class="d-flex flex-column" *ngIf="documents && documents.cin">
+            <a (click)="openFile(documents.cin, documents.cinContentType)">Agrandir</a>
+            <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.cin)" type="application/pdf">
+              <p>Your browser does not support PDFs.</p>
+              <a (click)="openFile(documents.cin, documents.cinContentType)">Voir le document</a>
+            </object>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div appTranslate="intershipManagementApp.documents.lettreMotivation">Lettre de motivation</div>
+          <div class="d-flex flex-column" *ngIf="documents && documents.lettreMotivation">
+            <a (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)">Agrandir</a>
+            <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.lettreMotivation)" type="application/pdf">
+              <p>Your browser does not support PDFs.</p>
+              <a (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)">Voir le document</a>
+            </object>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div appTranslate="intershipManagementApp.documents.attestationScolarite">Attestation de scolarité</div>
+          <div class="d-flex flex-column" *ngIf="documents && documents.attestationScolarite">
+            <a (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)">Agrandir</a>
+            <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.attestationScolarite)" type="application/pdf">
+              <p>Your browser does not support PDFs.</p>
+              <a (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)">Voir le document</a>
+            </object>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div appTranslate="intershipManagementApp.documents.attestationAssurance">Attestation d'assurance</div>
+          <div class="d-flex flex-column" *ngIf="documents && documents.attestationAssurance">
+            <a (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)">Agrandir</a>
+            <object [attr.data]="sanitize('data:application/pdf;base64,' + documents.attestationAssurance)" type="application/pdf">
+              <p>Your browser does not support PDFs.</p>
+              <a (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)">Voir le document</a>
+            </object>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Back</span>
+  </button>
+
+  <button type="button" [routerLink]="['/gestion/demande', demande.id, 'edit']" class="btn btn-primary">
+    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Edit</span>
+  </button>
+</div>

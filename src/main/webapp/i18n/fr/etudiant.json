@@ -1,0 +1,32 @@
+{
+  "intershipManagementApp": {
+    "etudiant": {
+      "home": {
+        "title": "Etudiants",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau etudiant",
+        "createOrEditLabel": "Créer ou éditer un etudiant",
+        "notFound": "Aucun etudiant trouvé"
+      },
+      "created": "Un nouveau etudiant a été créé avec l'identifiant {{ param }}",
+      "updated": "L'etudiant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "L'etudiant avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le etudiant {{ id }} ?"
+      },
+      "detail": {
+        "title": "Etudiant"
+      },
+      "id": "ID",
+      "cin": "CIN",
+      "civilite": "Civilité",
+      "nom": "Nom",
+      "prenom": "Prénom",
+      "telephone": "Téléphone",
+      "email": "Email",
+      "dateNaissance": "Date de naissance",
+      "adresse": "Adresse",
+      "ville": "Ville"
+    }
+  }
+}

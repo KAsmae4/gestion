@@ -1,0 +1,90 @@
+
+application {
+  config {
+    baseName intershipManagement,
+    applicationType monolith,
+    packageName com.kchaimae,
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    devDatabaseType mysql,
+    clientFramework angular
+    jhiPrefix app
+    languages [fr]
+  }
+  entities *
+}
+
+entity Etudiant {
+	nom String required
+    prenom String required
+    telephone String required
+    email String required
+    dateNaissance LocalDate required
+    adresse String required
+    ville String required
+}
+
+entity Demande {
+	dateDemande LocalDate
+    dateDebut LocalDate required
+    dateFin LocalDate required
+    sujet String required
+    statut StatutDemande required
+}
+enum StatutDemande {
+	DEMANDEE, ACCEPTEE, REFUSEE
+}
+
+entity ChefService {
+	nom String required
+    prenom String required
+    telephone String required
+    email String required
+}
+entity Encadrant {
+	nom String required
+    prenom String required
+    telephone String required
+    email String required
+}
+entity Formation {
+	nom String required
+    telephone String required
+   	adresse String required
+    ville String required
+}
+entity TypeFormation {
+	nom String required
+    type String required
+}
+entity Hopital {
+	nom String required
+    telephone String required
+   	adresse String required
+    ville String required
+}
+entity ServiceHospitalier {
+	nom String required
+	emplacement String required
+}
+entity TypeService {
+	nom String required
+}
+
+relationship ManyToOne {
+	Formation{typeFormation required} to TypeFormation
+  	Demande{etudiant required} to Etudiant
+    ServiceHospitalier{typeService required} to TypeService
+	ServiceHospitalier{chefService required} to ChefService
+	ServiceHospitalier{hopital required} to Hopital
+	Demande{service} to ServiceHospitalier
+    Encadrant{service} to ServiceHospitalier
+    Demande to Encadrant
+}
+
+relationship OneToOne {
+	Formation to Demande
+}
+
+paginate * with pagination
+

@@ -1,0 +1,29 @@
+{
+  "intershipManagementApp": {
+    "encadrant": {
+      "home": {
+        "title": "Encadrants",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Encadrant",
+        "createOrEditLabel": "Create or edit a Encadrant",
+        "notFound": "No Encadrants found"
+      },
+      "created": "A new Encadrant is created with identifier {{ param }}",
+      "updated": "A Encadrant is updated with identifier {{ param }}",
+      "deleted": "A Encadrant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Encadrant {{ id }}?"
+      },
+      "detail": {
+        "title": "Encadrant"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "telephone": "Telephone",
+      "email": "Email",
+      "service": "Service",
+      "demande": "Demande"
+    }
+  }
+}

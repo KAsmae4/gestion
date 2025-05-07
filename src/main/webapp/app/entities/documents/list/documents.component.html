@@ -1,0 +1,178 @@
+<div class="card jh-card">
+  <h2 id="page-heading" data-cy="DocumentsHeading">
+    <span appTranslate="intershipManagementApp.documents.home.title">Documents</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="intershipManagementApp.documents.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-documents"
+        [routerLink]="['/gestion/documents/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="intershipManagementApp.documents.home.createLabel"> Create a new Documents </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="documents?.length === 0">
+    <span appTranslate="intershipManagementApp.documents.home.notFound">No Documents found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="documents && documents.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cv">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.cv">Cv</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cin">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.cin">CIN</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="lettreMotivation">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.lettreMotivation">Lettre de motivation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="attestationScolarite">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.attestationScolarite">Attestation de scolarité</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="attestationAssurance">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.attestationAssurance">Attestation Assurance</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="demande.id">
+            <div class="d-flex">
+              <span appTranslate="intershipManagementApp.documents.demande">Demande</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let documents of documents; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/gestion/documents', documents.id, 'view']">{{ documents.id }}</a>
+          </td>
+          <td>
+            <a *ngIf="documents.cv" (click)="openFile(documents.cv, documents.cvContentType)" appTranslate="entity.action.open">Open</a>
+            <span *ngIf="documents.cv">{{ documents.cvContentType }}, {{ byteSize(documents.cv) }}</span>
+          </td>
+          <td>
+            <a *ngIf="documents.cin" (click)="openFile(documents.cin, documents.cinContentType)" appTranslate="entity.action.open">Open</a>
+            <span *ngIf="documents.cin">{{ documents.cinContentType }}, {{ byteSize(documents.cin) }}</span>
+          </td>
+          <td>
+            <a
+              *ngIf="documents.lettreMotivation"
+              (click)="openFile(documents.lettreMotivation, documents.lettreMotivationContentType)"
+              appTranslate="entity.action.open"
+              >Open</a
+            >
+            <span *ngIf="documents.lettreMotivation"
+              >{{ documents.lettreMotivationContentType }}, {{ byteSize(documents.lettreMotivation) }}</span
+            >
+          </td>
+          <td>
+            <a
+              *ngIf="documents.attestationScolarite"
+              (click)="openFile(documents.attestationScolarite, documents.attestationScolariteContentType)"
+              appTranslate="entity.action.open"
+              >Open</a
+            >
+            <span *ngIf="documents.attestationScolarite"
+              >{{ documents.attestationScolariteContentType }}, {{ byteSize(documents.attestationScolarite) }}</span
+            >
+          </td>
+          <td>
+            <a
+              *ngIf="documents.attestationAssurance"
+              (click)="openFile(documents.attestationAssurance, documents.attestationAssuranceContentType)"
+              appTranslate="entity.action.open"
+              >Open</a
+            >
+            <span *ngIf="documents.attestationAssurance"
+              >{{ documents.attestationAssuranceContentType }}, {{ byteSize(documents.attestationAssurance) }}</span
+            >
+          </td>
+          <td>
+            <div *ngIf="documents.demande">
+              <a [routerLink]="['/gestion/demande', documents.demande.id, 'view']">{{ documents.demande.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/gestion/documents', documents.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/gestion/documents', documents.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(documents)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="documents && documents.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

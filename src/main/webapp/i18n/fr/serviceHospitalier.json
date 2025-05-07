@@ -1,0 +1,28 @@
+{
+  "intershipManagementApp": {
+    "serviceHospitalier": {
+      "home": {
+        "title": "Services hospitalier",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau service hospitalier",
+        "createOrEditLabel": "Créer ou éditer un service hospitalier",
+        "notFound": "Aucun service hospitalier trouvé"
+      },
+      "created": "Un nouveau Service hospitalier a été créé avec l'identifiant {{ param }}",
+      "updated": "Le service hospitalier avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le service hospitalier avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le service hospitalier {{ id }} ?"
+      },
+      "detail": {
+        "title": "Service hospitalier"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "emplacement": "Emplacement",
+      "typeService": "Type de service",
+      "chefService": "Chef de service",
+      "hopital": "Hôpital"
+    }
+  }
+}
